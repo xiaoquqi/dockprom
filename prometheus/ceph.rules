@@ -1,0 +1,20 @@
+groups:
+- name: ceph-rule
+  rules:
+  - alert: Ceph OSD Down
+    expr: ceph_osd_down > 0
+    for: 2m
+    labels:
+      product: Ceph测试集群
+    annotations:
+      Warn: "{{$labels.instance}}: 有{{ $value }}个OSD挂掉了"
+      Description: "{{$labels.instance}}:{{ $labels.osd }}当前状态为{{ $labels.status }}"
+
+  - alert: 集群空间使用率
+    expr: ceph_cluster_used_bytes / ceph_cluster_capacity_bytes * 100 > 80
+    for: 2m
+    labels:
+      product: Ceph测试集群
+    annotations:
+      Warn: "{{$labels.instance}}:集群空间不足"
+      Description: "{{$labels.instance}}:当前空间使用率为{{ $value }}"

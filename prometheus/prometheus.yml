@@ -10,6 +10,7 @@ global:
 # Load and evaluate rules in this file every 'evaluation_interval' seconds.
 rule_files:
   - "alert.rules"
+  - "ceph.rules"
 
 # A scrape configuration containing exactly one endpoint to scrape.
 scrape_configs:
@@ -33,6 +34,14 @@ scrape_configs:
     honor_labels: true
     static_configs:
       - targets: ['pushgateway:9091']
+
+  - job_name: 'ceph-exporter'
+    scrape_interval: 5s
+    honor_labels: true
+    static_configs:
+    - targets: ['ceph-exporter-host:9128']
+      labels:
+        instance: Ceph Cluster
 
 
 alerting:

@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+  ceph-exporter:
+    image: digitalocean/ceph_exporter
+    container_name: ceph-exporter
+    volumes:
+        - /etc/ceph:/etc/ceph
+    restart: unless-stopped
+    ports:
+        - '9128:9128'
+    expose:
+      - 9128
+    labels:
+      org.label-schema.group: "monitoring"

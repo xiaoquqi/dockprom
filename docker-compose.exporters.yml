@@ -1,7 +1,6 @@
 version: '2.1'
 
 services:
-
   nodeexporter:
     image: prom/node-exporter:v1.0.1
     container_name: nodeexporter
@@ -32,5 +31,3 @@ services:
     network_mode: host
     labels:
       org.label-schema.group: "monitoring"
-  
-
