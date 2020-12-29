@@ -132,15 +132,14 @@ services:
     labels:
       org.label-schema.group: "monitoring"
 
-  prometheus-webhook-dingtalk:
-     image: alivv/dingtalk
-     container_name: dingtalk
-     restart: unless-stopped
-     volumes:
-      - ./dingtalk/config.yml:/etc/prometheus-webhook-dingtalk/config.yml
-     ports:
-       - "8060:8060"
-     expose:
-       - 8060
-     networks:
-       - monitor-net
+  prometheus-webhook-alertmanagers-dingtalk:
+    image: timonwong/prometheus-webhook-dingtalk:v0.3.0
+    container_name: prometheus-webhook-alertmanagers-dingtalk
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "8060:8060"
+    entrypoint: /bin/prometheus-webhook-dingtalk --ding.profile="webhook1=https://dingding.webhook"
+    networks:
+      - monitor-net
